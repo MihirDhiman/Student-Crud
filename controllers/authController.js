@@ -1,15 +1,9 @@
 import { db } from "../db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
+import { createTransporter } from "../helper/mailer.js";
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const transporter = createTransporter();
 
 let otpStore = {};
 
@@ -105,5 +99,3 @@ export const login = (req, res) => {
     }
   );
 };
-
-

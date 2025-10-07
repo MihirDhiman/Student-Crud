@@ -14,7 +14,7 @@ router.post("/college-login", collegeLogin);
 router.post("/college-register", collegeRegister);
 
 // Student approval routes
-router.put("/student/:id/:action", verifyToken, updateStudentStatus);
+router.put("/student/", verifyToken, updateStudentStatus);
 router.get("/students", verifyToken, getAllStudents);
 
 export default router;

@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const updateStudentStatus = (req, res) => {
-  const { id, action } = req.params;
+  const { id, action } = req.body;
   if (!["accepted", "rejected"].includes(action))
     return res.status(400).json({ message: "Invalid action" });
 
