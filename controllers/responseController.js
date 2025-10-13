@@ -49,7 +49,7 @@ export const sendStatusEmails = (req, res) => {
 
         <!-- Header -->
         <div style="background:linear-gradient(135deg, ${accentColor}, #8e44ad); padding:28px; text-align:center;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Accenture.svg" alt="College Logo" width="120" style="filter:brightness(0) invert(1);"/>
+            <img src="https://www.shutterstock.com/image-vector/college-logo-design-template-vector-600nw-2312781315.jpg" alt="College Logo" width="120" />
             <h2 style="color:#fff; font-size:22px; font-weight:600; margin-top:10px; letter-spacing:0.5px;">
             College Admission Portal
             </h2>
