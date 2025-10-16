@@ -18,8 +18,7 @@ async function seedAdmin() {
   const adminPassword = "Admin@123";
 
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
-
-  console.log("Checking if admin already exists");
+  
   db.query(
     "SELECT * FROM college_authority WHERE email = ?",
     [adminEmail],
