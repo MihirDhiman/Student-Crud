@@ -30,4 +30,8 @@ Thumbs.db
 package-lock.json
 package.json
 
+#firebase
+secrets/
+
+
 Readme

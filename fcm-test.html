@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FCM Test</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
+</head>
+<body>
+  <h1>Firebase Cloud Messaging Test</h1>
+  <button id="getTokenBtn">Get FCM Token</button>
+  <pre id="tokenOutput"></pre>
+
+  <script>
+    // 🔑 Replace these with your Firebase Web App config
+    const firebaseConfig = {
+  apiKey: "AIzaSyA8xg7xcMgHabjcMA2SC9lGaPSNQ4WvA8E",
+  authDomain: "student-crud-13ab9.firebaseapp.com",
+  projectId: "student-crud-13ab9",
+  storageBucket: "student-crud-13ab9.firebasestorage.app",
+  messagingSenderId: "635295068649",
+  appId: "1:635295068649:web:17417da9e074ba2bad5b78",
+    };
+
+    // 🔑 Replace with your Web Push VAPID key
+    const vapidKey = "BBfQkP3hHLB3kV4597HSBj50CsvpiGyiRK241eTBblZ9e7lJH5X3CockTSF13PuoEmYSUAUX6ld9T2_VREMC_Fw";
+
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/firebase-messaging-sw.js')
+        .then(reg => console.log("Service Worker registered:", reg))
+        .catch(err => console.error("SW registration error:", err));
+    }
+document.getElementById("getTokenBtn").addEventListener("click", async () => {
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission !== "granted") {
+      alert("Notifications permission denied");
+      return;
+    }
+
+    // Register service worker
+    const swRegistration = await navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then(reg => {
+        console.log("Service Worker registered:", reg);
+        return reg;
+      })
+      .catch(err => {
+        console.error("SW registration error:", err);
+        alert("Service Worker registration failed!");
+      });
+
+    if (!swRegistration) return;
+
+    // Get FCM token
+    const token = await messaging.getToken({
+      vapidKey: vapidKey,
+      serviceWorkerRegistration: swRegistration
+    });
+
+    console.log("FCM Token:", token);
+    document.getElementById("tokenOutput").innerText = token;
+    alert("Token printed! Check console or copy from page.");
+  } catch (err) {
+    console.error("Error getting FCM token:", err);
+    alert("Error! Check console.");
+  }
+});
+
+    // Handle messages while page is open
+    messaging.onMessage(payload => {
+      console.log("Message received:", payload);
+      alert(`Notification: ${payload.notification.title}\n${payload.notification.body}`);
+    });
+  </script>
+</body>
+</html>
