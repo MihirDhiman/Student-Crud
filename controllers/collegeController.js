@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { sendSuccess, sendError } from "../helper/response-helper.js";
 import { loadTemplate, createTransporter } from "../helper/mailer.js";
 
-e     xport const updateStudentStatus = (req, res) => {
+export const updateStudentStatus = (req, res) => {
   const { id, action } = req.body;
 
   db.query(

@@ -3,21 +3,27 @@ import { Server } from "socket.io";
 export function initSocket(httpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: "*", // allow requests from anywhere
+      origin: "*",
     },
+    pingInterval: 10000, // send heartbeat every 10s
+    pingTimeout: 30000, // wait 30s before disconnecting
   });
 
   io.on("connection", (socket) => {
-    console.log("New Socket.IO client connected");
+    console.log("New Socket.IO client connected (ID:", socket.id, ")");
 
-    // Listen for "sayHello" event
-    socket.on("sayHello", () => {
-      console.log("Received sayHello event");
-      socket.emit("reply", "Hello World");
+    // any event from the client
+    socket.onAny((event, data) => {
+      console.log(`📩 Received event: ${event} | Data:`, data);
+
+      // reply
+      socket.emit("reply", `You said: ${data}`);
     });
 
-    socket.on("disconnect", () => {
-      console.log("Client disconnected");
+    socket.on("disconnect", (reason) => {
+      console.log("Client disconnected:", reason);
     });
   });
+
+  console.log("Socket.IO server initialized");
 }

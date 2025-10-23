@@ -1,6 +1,6 @@
 import http from "http";
 import { WebSocketServer } from "ws";
-import app from "./app.js"; 
+import app from "./app.js";
 
 const PORT = process.env.PORT || 5000;
 
@@ -14,9 +14,10 @@ wss.on("connection", (ws) => {
 
   ws.on("message", (message) => {
     console.log("Received:", message.toString());
-
     if (message.toString() === "sayHello") {
       ws.send("Hello World"); // reply to client
+    } else {
+      ws.send(`You said: ${message}`);
     }
   });
 
