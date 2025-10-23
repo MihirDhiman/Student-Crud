@@ -23,3 +23,4 @@ export const sendNotification = async (req, res) => {
     });
   }
 };
+
