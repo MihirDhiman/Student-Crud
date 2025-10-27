@@ -1,6 +1,6 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
-import { db } from "../db.js";
+import { db } from "../../db.js";
 
 async function seedAdmin() {
   console.log("Connecting to database...");
@@ -18,7 +18,7 @@ async function seedAdmin() {
   const adminPassword = "Admin@123";
 
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
-  
+
   db.query(
     "SELECT * FROM college_authority WHERE email = ?",
     [adminEmail],
